@@ -4,7 +4,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation
 
 num_inputs=18
-depth=8
+depth=3
 
 image=cv2.imread('lena.png')
 out = image.reshape(len(image)**2, 3)
@@ -19,12 +19,12 @@ for i in range(depth-1):
 model.add(Dense(3))
 
 
-model.compile(optimizer='rmsprop',
+model.compile(optimizer='adam',
               loss='mse')
 
-#model.load_weights("weights.hdf5", by_name=False)
-model.fit(inp, out, epochs=100, batch_size=len(inp))
+model.load_weights("weights.hdf5", by_name=False)
+model.fit(inp, out, epochs=4200, batch_size=len(inp))
 model.save_weights("weights.hdf5")
 
-#predicted_image=model.predict(inp).reshape(512,512,3)
-#cv2.imwrite('a.png', predicted_image)
+predicted_image=model.predict(inp).reshape(512,512,3)
+cv2.imwrite('a.png', predicted_image)
